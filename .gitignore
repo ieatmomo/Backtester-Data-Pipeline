@@ -1,0 +1,27 @@
+# ===== Python virtual environment =====
+venv/
+.venv/
+env/
+ENV/
+
+# If venv lives inside the repo (your case)
+Include/
+Lib/
+Scripts/
+pyvenv.cfg
+
+# ===== Python cache / bytecode =====
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ===== Environment variables =====
+.env
+
+# ===== OS junk =====
+.DS_Store
+Thumbs.db
+
+# ===== Editor junk =====
+.vscode/
+.idea/
