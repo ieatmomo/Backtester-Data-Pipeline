@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import requests
 import json
+from caching import Caching
 
 
 class Fetcher:
@@ -46,24 +47,31 @@ class Fetcher:
         response = response.json()
         return response
 
-    def _check_token_exists(self, response):
-        if response['next_page_token'] == None:
-            return False 
+    # def _check_token_exists(self, response):
+    #     if response['next_page_token'] == None:
+    #         return False 
 
-        else:
-            return True
+    #     else:
+    #         return True
 
     def fetch(self):
-        next_page_flag = False
         response = self._api_call()
         data = self._parse_response(response)
-        #TODO: SAVE TO CSV
+        
+        cacher = Caching(self.symbols, self.start, self.end)
 
-        token_check = self._check_token_exists(data)
-        while token_check:
+        while True:
+            bars = data["bars"][self.symbols]
+            cacher.cache(bars)
+
+            if data["next_page_token"] is None:
+                break
+
             page_token = data['next_page_token']
-            next_page = self._next_page_api_call(page_token)
-            #TODO: SAVE DATA TO CSV
+            response = self._next_page_api_call(page_token)
+            data = self._parse_response(response)
+
+        return "Done"
 
 
 
