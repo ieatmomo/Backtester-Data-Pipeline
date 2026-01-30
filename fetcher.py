@@ -5,19 +5,18 @@ from caching import Caching
 
 
 class Fetcher:
-    def __init__(self, API_KEY, API_SECRET_KEY):
+    def __init__(self, API_KEY, API_SECRET_KEY, symbols, timeframe, start, end, limit, adjustment, feed, sort):
         self.API_KEY = API_KEY
         self.API_SECRET_KEY = API_SECRET_KEY
-        self.symbols = "AAPL"
-        self.timeframe = "5Min"
-        self.start = "2024-01-03T00%3A00%3A00Z"
-        self.end = "2024-01-04T00%3A00%3A00Z"
-        self.limit = "100"
-        self.adjustment = "raw"
-        self.feed = "sip"
-        self.sort = "asc"
+        self.symbols = symbols
+        self.timeframe = timeframe
+        self.start = start
+        self.end = end
+        self.limit = limit
+        self.adjustment = adjustment
+        self.feed = feed
+        self.sort = sort
 
-    
     def _api_call(self):
         
         url = f"https://data.alpaca.markets/v2/stocks/bars?symbols={self.symbols}&timeframe={self.timeframe}&start={self.start}&end={self.end}&limit={self.limit}&adjustment={self.adjustment}&feed={self.feed}&sort={self.sort}"
@@ -46,13 +45,6 @@ class Fetcher:
     def _parse_response(self, response):
         response = response.json()
         return response
-
-    # def _check_token_exists(self, response):
-    #     if response['next_page_token'] == None:
-    #         return False 
-
-    #     else:
-    #         return True
 
     def fetch(self):
         response = self._api_call()
