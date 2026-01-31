@@ -13,7 +13,7 @@ class Caching:
         
         file_name = f"{self.symbol}_{self.start}_{self.end}.csv"
         file_path = os.path.join(data_dir, file_name)
-        file_exists = os.path.exists(file_name)
+        file_exists = os.path.exists(file_path)
 
         with open(file_path, 'a', newline='') as csvfile:
             field_names = ['c', 'h', 'l', 'n', 'o', 't', 'v', 'vw']

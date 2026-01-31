@@ -3,6 +3,7 @@ import os
 from fetcher import Fetcher
 import argparse
 from batching.batching import batches
+from normaliser import Normaliser
 
 
 #IMPLEMENTING CLI
@@ -46,8 +47,12 @@ if not file_exists_raw:
     print("HAS BEEN CREATED")
 
 #Only happens if file doesnt exist in cleaned and formatted and storage (shouldnt matter tbf, if it exists in storage, should exist everywhere else)
+normaliser = Normaliser(symbol, start, end)
 for batch in batches(file_path):
+    #normalise
+    normaliser.normalise(batch) # DONE
     #clean
+    
     #format
     #store
     print("hi")
