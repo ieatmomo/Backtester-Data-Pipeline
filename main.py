@@ -5,6 +5,7 @@ import argparse
 from batching.batching import batches
 from normaliser import Normaliser
 from cleaning.cleaning import cleaning
+from formatting.formatting import formatting
 
 
 #IMPLEMENTING CLI
@@ -53,8 +54,9 @@ for batch in batches(file_path):
     #normalise
     normalised = normaliser.normalise(batch) # DONE
     #clean
-    cleaning(normalised, "cleaned", symbol, start, end)
+    cleaned = cleaning(normalised, "cleaned", symbol, start, end)
     #format
+    formatting(cleaned)
     #store
     print("hi")
 
