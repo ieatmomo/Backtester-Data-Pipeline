@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+from csv_saver import CSVsaver
 
 '''
 1) Convert dict to DF -> Batching already converts into a DF
@@ -23,20 +24,13 @@ class Normaliser:
     def _reorder(self, df):
         return df.iloc[:, [5, 4, 1, 2, 0, 6, 7, 3]]
 
-    def _save_as_csv(self, df):
-        normalised_dir = "data/normalised"
-        os.makedirs(normalised_dir, exist_ok=True)
-        
-        file_name = f"{self.symbol}_{self.start}_{self.end}.csv"
-        file_path = os.path.join(normalised_dir, file_name)
-        
-        # Use pandas to_csv with append mode
-        df.to_csv(file_path, mode='a', header=not os.path.exists(file_path), index=False)
-
     def normalise(self, batch):
+        saver = CSVsaver("normalised", self.symbol, self.start, self.end)
         renamed = self._rename_columns(batch)
         reordered = self._reorder(renamed)
 
-        self._save_as_csv(reordered)
+        saver.save_as_csv(reordered)
+
+        return reordered
         
 

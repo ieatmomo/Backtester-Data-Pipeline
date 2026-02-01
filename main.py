@@ -4,6 +4,7 @@ from fetcher import Fetcher
 import argparse
 from batching.batching import batches
 from normaliser import Normaliser
+from cleaning.cleaning import cleaning
 
 
 #IMPLEMENTING CLI
@@ -50,9 +51,9 @@ if not file_exists_raw:
 normaliser = Normaliser(symbol, start, end)
 for batch in batches(file_path):
     #normalise
-    normaliser.normalise(batch) # DONE
+    normalised = normaliser.normalise(batch) # DONE
     #clean
-    
+    cleaning(normalised, "cleaned", symbol, start, end)
     #format
     #store
     print("hi")
